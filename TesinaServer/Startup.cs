@@ -33,7 +33,7 @@ namespace TesinaServer {
             app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "gameapi",
-                    template: "GameAPI/{action=AddNewPlayer}/{uuid?}");
+                    template: "GameAPI/{action=AddNewPlayer}/{matchID?}/{uuid?}");
             });
 
             app.UseMvc(routes => {
