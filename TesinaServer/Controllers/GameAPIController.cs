@@ -24,18 +24,18 @@ namespace TesinaServer.Views.GameAPI {
         }
 
         // GET api/values/5
-        [HttpGet("Match/Get/{MatchID?}")]
+        [HttpGet("Match/{MatchID?}")]
         public string GetMatchInfo(int MatchID = -1) {
             string response = "";
             if (MatchID == -1) {
                 foreach (Match m in MatchManager.GetAllMatches()) {
-                    response += m;
+                    response += Environment.NewLine + m;
                 }
             } else {
                 response += MatchManager.GetMatchByID(MatchID);
             }
 
-            return "Getting info from " + (MatchID == -1 ? "all matches" : "match with ID") + ": " + (response != "" ? response : "Got nothing!");
+            return "Getting info from " + (MatchID == 0 ? "all matches" : "match with ID") + ": " + (response != "" ? response : "Got nothing!");
         }
 
         // GET api/values/5
@@ -53,7 +53,7 @@ namespace TesinaServer.Views.GameAPI {
 
         // POST GameAPI/Match/New
         [HttpPost("Match/New")]
-        public string Post([FromBody] string value) {
+        public string PostNewMatch([FromBody] string value) {
             string response = "NEW MATCH REQUEST WITH NAME " + value + "AND ID ";
             int mID = MatchManager.CreateNewMatch(value);
             response += mID + "!";
@@ -62,8 +62,10 @@ namespace TesinaServer.Views.GameAPI {
         }
 
         // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id) {
+        [HttpDelete("Match/Delete/{id}")]
+        public string DeleteMatch(int id) {
+            MatchManager.DeleteMatch(id);
+            return "Deleted match with ID " + id;
         }
     }
 }

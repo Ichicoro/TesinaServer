@@ -21,12 +21,21 @@ namespace TesinaServer.Helpers {
         public static int CreateNewMatch(string MatchName) {
             Random r = new Random();
             int MatchID = r.Next();
-            while (GetMatchByID(MatchID) != null) {
+            while (GetMatchByID(MatchID) != null || MatchID == 0) {
                 MatchID = r.Next();
             }
             Match m = new Match(MatchName, MatchID);
             Matches.Add(m);
             return MatchID;
+        }
+
+        public static int DeleteMatch(int id) {
+            foreach (Match match in Matches) {
+                if (match.MatchID == id)
+                    Matches.Remove(match);
+                    return 0;
+            }
+            return 1;
         }
     }
 }

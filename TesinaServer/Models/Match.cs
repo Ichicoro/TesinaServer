@@ -13,8 +13,8 @@ namespace TesinaServer.Models {
             this.PlayerList = new List<Player>();
         }
 
-        override public string ToString() {
-            return "[MatchID: " + this.MatchID + "; MatchName: " + this.MatchName + "]";
-        }
+        override public string ToString() => "[MatchID: " + this.MatchID + "; MatchName: " + this.MatchName + "]";
+
+        public string ToSerializedData() => "";
     }
 }
