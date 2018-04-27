@@ -12,7 +12,7 @@ namespace TesinaServer.Helpers {
 
         public static Match GetMatchByID(int id) {
             foreach (Match match in Matches) {
-                if (match.MatchID == id)
+                if (match.ID == id)
                     return match;
             }
             return null;
@@ -31,11 +31,19 @@ namespace TesinaServer.Helpers {
 
         public static int DeleteMatch(int id) {
             foreach (Match match in Matches) {
-                if (match.MatchID == id)
+                if (match.ID == id)
                     Matches.Remove(match);
                     return 0;
             }
             return 1;
         }
+
+		public static int AddPlayer(int MatchID, Player p) {
+			foreach (Match match in Matches) {
+				if (match.ID == MatchID)
+					match.PlayerList.Add();
+			}
+			return 1;
+		}
     }
 }
