@@ -16,5 +16,9 @@ namespace TesinaServer.Models {
             this.Username = Username;
 			this.MatchID = MatchID;
         }
+
+		public bool Equals(Player p) {
+			return (p.ID == this.ID);
+		}
     }
 }

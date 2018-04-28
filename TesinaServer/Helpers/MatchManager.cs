@@ -38,12 +38,50 @@ namespace TesinaServer.Helpers {
             return 1;
         }
 
-		public static int AddPlayer(int MatchID, Player p) {
+		public static Player AddPlayer(int MatchID, string Username) {
+			Random r = new Random();
+			int id = r.Next();
+			Player p = new Player(Username, id, MatchID);
 			foreach (Match match in Matches) {
 				if (match.ID == MatchID)
-					match.PlayerList.Add();
+					match.PlayerList.Add(p);
 			}
-			return 1;
+			return p;
 		}
+
+		public static Player GetPlayer(int playerID) {
+			foreach (Match m in Matches) {
+				Player p = m.getPlayer(playerID);
+				if (p != null)
+					return p;
+			}
+			return null;
+		}
+
+		public static Player GetPlayer(int PlayerID, int MatchID) {
+			Match m = GetMatchByID(MatchID);
+			if (m != null) {
+				Player p = m.getPlayer(PlayerID);
+				if (p != null)
+					return p;
+			}
+			return null;
+		}
+
+		public static int DeletePlayer(int PlayerID) {
+			foreach (Match m in Matches) {
+				Player p = m.getPlayer(playerID);
+				if (p != null)
+					m.DeletePlayer(p);
+			}
+			return -1;
+		}
+
+		public static int DeletePlayer(int PlayerID, int MatchID) {
+
+			return -1;
+		}
+			
+
     }
 }

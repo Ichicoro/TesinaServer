@@ -72,16 +72,11 @@ namespace TesinaServer.Views.GameAPI {
 
 		[HttpGet("matches/{id?}")]
 		public string GetMatch(int id = -1) {
+			if (id < 0) 
+				return JsonConvert.SerializeObject(MatchManager.GetAllMatches());
+			
 			List<Match> MatchList = new List<Match>();
-			if (id == -1) {
-				foreach (Match m in MatchManager.GetAllMatches()) {
-					MatchList.Add(m);
-				}
-			} else {
-				MatchList.Add(MatchManager.GetMatchByID(id));
-			}
-
-			// return "Getting info from " + (id == 0 ? "all matches" : "match with ID") + ": " + (response != "" ? response : "Got nothing!");
+			MatchList.Add(MatchManager.GetMatchByID(id));
 			return JsonConvert.SerializeObject(MatchList);
 		}
 
