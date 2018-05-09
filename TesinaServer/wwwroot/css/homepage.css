@@ -1,38 +1,83 @@
-﻿body {
-    background-image: linear-gradient(to bottom right, rgb(139,0,0), rgb(255,177,50));
+﻿.rossobus {
+    color: #E94650;
+}
+
+.aranciobus {
+    color: #F39028;
+}
+
+.blubus {
+    color: #3897AC;
+}
+
+.verdebus {
+    color: #96BE1F;
+}
+
+body {
+    /*background-image: linear-gradient(to bottom right, rgb(139,0,0), rgb(255,177,50));
     /*background-image: url("../images/brightbg.jpg"); */
-    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: "Roboto Mono", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 1rem;
-    margin: 0px;
-    border: 0px;
-    padding: 0px;
+    margin: 0;
+    border: 0;
+    padding: 0;
     text-align: center;
     width: 100vw;
 }
+
 html {
     height: 100vh;
 }
 
-#container {
-    width: 100%;
+
+
+@media only screen and (min-width: 600px) {
+    #content {
+        width: 600px;
+        margin: 4em auto;
+        background-color: transparent;
+    }
+
+    #leftdiv, #rightdiv {
+        float:left;
+        width: 43%;
+    }
+
+    #logodiv {
+        text-align: center;
+        width: 600px;
+    }
 }
 
-#content {
-    width: 800px;
-    margin: 4em auto;
-    background-color: white;
-    border: 2px solid gray;
-    border-radius: 5px;
-    box-shadow: 10px 10px rgba(0,0,0,0.25);
-}
+@media only screen and (max-width: 600px) {
+    #content {
+        width: 400px;
+        margin: 4em auto;
+        background-color: transparent;
+        /*font-size: 3em;*/
+    }
 
-#leftdiv {
-    border-right: 1px solid black;
+    #logodiv {
+        text-align: center;
+        width: 400px;
+    }
 
-}
+    #titolo {
+        width: 400px;
+    }
 
-#rightdiv {
-    border-left: 1px solid black;
+    #leftdiv {
+        display: block;
+        float: left;
+        width: 100%;
+    }
+
+    #rightdiv {
+        display: block;
+        float: left;
+        width: 100%;
+    }
 }
 
 #tesinalogo {
@@ -44,11 +89,12 @@ html {
     overflow: auto;
     padding-bottom: 30px;
     vertical-align: central;
+    width: fit-content;
 }
 
 .twochoicesdiv {
     display: inline-block;
-    width: 35%;
+    width: 35em;
     padding: 20px;
     height: 130px;
 }
@@ -56,6 +102,8 @@ html {
 /*#rightdiv {
     border: 2px initial left;
 }*/
+
+
 
 .background-image {
     -webkit-filter: blur(5px);
@@ -72,5 +120,21 @@ html {
     z-index: 1;
     display: block;
     color: #FFF;
-    border: 2px solid rgba(255,255,255,0.5);
+   
+}
+
+.sfondi {
+    z-index: -1000;
+    position: absolute;
+    height: 35em;
+}
+
+#sfondo_dx {
+    bottom: 0;
+    right: 0;
+}
+
+#sfondo_sx {
+    top: 0;
+    left: 0;
 }

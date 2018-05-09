@@ -11,7 +11,7 @@ namespace TesinaServer.Helpers {
         }
 
         public static Match GetMatchByID(int id) {
-            foreach (Match match in Matches) {
+            foreach (var match in Matches) {
                 if (match.ID == id)
                     return match;
             }
@@ -19,18 +19,18 @@ namespace TesinaServer.Helpers {
         }
 
         public static int CreateNewMatch(string MatchName) {
-            Random r = new Random();
-            int MatchID = r.Next();
+            var r = new Random();
+            var MatchID = r.Next();
             while (GetMatchByID(MatchID) != null || MatchID == 0) {
                 MatchID = r.Next();
             }
-            Match m = new Match(MatchName, MatchID);
+            var m = new Match(MatchName, MatchID);
             Matches.Add(m);
             return MatchID;
         }
 
         public static int DeleteMatch(int id) {
-            foreach (Match match in Matches) {
+            foreach (var match in Matches) {
                 if (match.ID == id)
                     Matches.Remove(match);
                     return 0;
@@ -39,10 +39,10 @@ namespace TesinaServer.Helpers {
         }
 
 		public static Player AddPlayer(int MatchID, string Username) {
-			Random r = new Random();
-			int id = r.Next();
-			Player p = new Player(Username, id, MatchID);
-			foreach (Match match in Matches) {
+			var r = new Random();
+			var id = r.Next();
+			var p = new Player(Username, id, MatchID);
+			foreach (var match in Matches) {
 				if (match.ID == MatchID)
 					match.PlayerList.Add(p);
 			}
@@ -50,8 +50,8 @@ namespace TesinaServer.Helpers {
 		}
 
 		public static Player GetPlayer(int playerID) {
-			foreach (Match m in Matches) {
-				Player p = m.getPlayer(playerID);
+			foreach (var m in Matches) {
+				var p = m.GetPlayer(playerID);
 				if (p != null)
 					return p;
 			}
@@ -59,29 +59,50 @@ namespace TesinaServer.Helpers {
 		}
 
 		public static Player GetPlayer(int PlayerID, int MatchID) {
-			Match m = GetMatchByID(MatchID);
-			if (m != null) {
-				Player p = m.getPlayer(PlayerID);
-				if (p != null)
-					return p;
-			}
-			return null;
+			var m = GetMatchByID(MatchID);
+			if (m == null) return null;
+			var p = m.GetPlayer(PlayerID);
+			return p ?? null;
 		}
 
+	    public static List<Player> GetAllPlayers(int mid = -1) {
+		    var playerList = new List<Player>();
+		    foreach (var m in Matches) {
+			    if (m.ID != mid && mid != -1) continue;
+			    foreach (var p in m.PlayerList) {
+				    playerList.Add(p);
+			    }
+		    }
+
+		    return playerList;
+	    }
+
 		public static int DeletePlayer(int PlayerID) {
-			foreach (Match m in Matches) {
-				Player p = m.getPlayer(playerID);
+			foreach (var m in Matches) {
+				var p = m.GetPlayer(PlayerID);
 				if (p != null)
 					m.DeletePlayer(p);
 			}
 			return -1;
 		}
 
-		public static int DeletePlayer(int PlayerID, int MatchID) {
-
+		public static int DeletePlayer(int MatchID, int PlayerID) {
+			foreach (var m in Matches) {
+				if (MatchID != m.ID) continue;
+				var p = m.GetPlayer(PlayerID);
+				if (p != null)
+					m.DeletePlayer(p);
+			}
 			return -1;
 		}
-			
+
+	    public static int UpdatePlayer(int mid, Player p) {
+		    var m = GetMatchByID(mid);
+		    Matches.Remove(m);
+		    m.UpdatePlayer(p);
+		    Matches.Add(m);
+		    return 0;
+	    }
 
     }
 }

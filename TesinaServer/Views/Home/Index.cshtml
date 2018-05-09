@@ -4,24 +4,28 @@
 
 <head>
     <title>ServerTesina</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
     <link rel="stylesheet" href="~/css/homepage.css">
 </head>
 
 
 <body>
-    <div id="content">
-        <h2>TesinaServer</h2>
-        <img src="~/images/tesinalogo.png" id="tesinalogo">
-        <div class="twochoicescontainer"><div class="twochoicesdiv" id="leftdiv">
-                <h3>I want to create a paintball game!</h3>
-                <button>Create a new game!</button>
-            </div><div class="twochoicesdiv" id="rightdiv">
-                <h3>I've already created a paintball game!</h3>
-                Code: <input type="text" id="currentgameid"/><button>Go!</button>
-            </div>
+<div id="content">
+    <h2 id="titolo"><span class="rossobus">Paint</span><span class="aranciobus">H</span><span class="blubus">U</span><span class="verdebus">D</span></h2>
+    <div id="logodiv"><img src="~/images/tesinalogo.png" id="tesinalogo" alt="PaintHUD Logo"></div>
+    <div class="twochoicescontainer"><div class="twochoicesdiv" id="leftdiv">
+            <h3>I want to create a paintball game!</h3>
+            <button>Create a new game!</button>
+        </div><div class="twochoicesdiv" id="rightdiv">
+            <h3>I've already created a paintball game!</h3>
+            Code: <input type="number" maxlength="6" id="currentgameid"/><button>Go!</button>
         </div>
     </div>
+</div>
+@*<img id="sfondo_dx" class="sfondi" src="images/sfondi/sfondo_dx.png"/>
+<img id="sfondo_sx" class="sfondi" src="images/sfondi/sfondo_sx.png"/>*@
+
 </body>
 
 

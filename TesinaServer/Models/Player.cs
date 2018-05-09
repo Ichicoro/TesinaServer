@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+
 namespace TesinaServer.Models {
     public class Player {
 		public int ID { get; set; }
@@ -20,5 +22,7 @@ namespace TesinaServer.Models {
 		public bool Equals(Player p) {
 			return (p.ID == this.ID);
 		}
+	    
+	    public string ToSerializedData() => JsonConvert.SerializeObject(this);
     }
 }

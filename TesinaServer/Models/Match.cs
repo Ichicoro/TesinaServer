@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 namespace TesinaServer.Models {
     public class Match {
@@ -13,32 +15,41 @@ namespace TesinaServer.Models {
             this.PlayerList = new List<Player>();
         }
 
-		public Player getPlayer(int pID) {
-			foreach (Player p in PlayerList)
+		public Player GetPlayer(int pID) {
+			foreach (var p in PlayerList)
 				if (p.ID == pID) return p;
 			return null;
 		}
 
 		public int DeletePlayer(int pID) {
-			foreach (Player p in PlayerList)
+			foreach (var p in PlayerList)
 				if (p.ID == pID) {
-					this.PlayerList.Remove(p);
+					PlayerList.Remove(p);
 					return 0;
 				}
 			return -1;
 		}
 
 		public int DeletePlayer(Player pl) {
-			foreach (Player p in PlayerList)
-				if (p == pl) {
-					this.PlayerList.Remove(pl);
+			foreach (var p in PlayerList)
+				if (p.Equals(pl)) {
+					PlayerList.Remove(pl);
 					return 0;
 				}
 			return -1;
 		}
 
-        override public string ToString() => "[MatchID: " + this.ID + "; MatchName: " + this.Name + "]";
+	    public int UpdatePlayer(Player p) {
+		    foreach (var pl in PlayerList) {
+			    if (pl.ID != p.ID) continue;
+			    PlayerList.Remove(pl);
+			    PlayerList.Add(p);
+		    }
+		    return 0;
+	    }
 
-        public string ToSerializedData() => "";
+        public override string ToString() => "[MatchID: " + this.ID + "; MatchName: " + this.Name + "]";
+
+        public string ToSerializedData() => JsonConvert.SerializeObject(this);
     }
 }

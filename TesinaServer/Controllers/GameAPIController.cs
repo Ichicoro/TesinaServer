@@ -39,26 +39,6 @@ namespace TesinaServer.Views.GameAPI {
 			return "Getting info from " + (MatchID == 0 ? "all matches" : "match with ID") + ": " + (response != "" ? response : "Got nothing!");
 		} */
 
-		// GET api/values/5
-		[HttpGet("Match/{id}")]
-		public string GetAllPlayers(string mID) {
-			Console.WriteLine(mID + "ALLPLAYERS");
-			return mID + "ALLPLAYERS";
-		}
-
-		// POST api/values
-		[HttpPut]
-		public void Put([FromBody]string value) {
-			Console.WriteLine("PROVAPROVAPROVA: " + value);
-		}
-
-
-		[HttpPost("players/{id}/position")]
-		public string UpdatePlayerPosition([FromBody] Player player) {
-
-			return "";
-		}
-
 
 
 
@@ -74,17 +54,16 @@ namespace TesinaServer.Views.GameAPI {
 		public string GetMatch(int id = -1) {
 			if (id < 0) 
 				return JsonConvert.SerializeObject(MatchManager.GetAllMatches());
-			
-			List<Match> MatchList = new List<Match>();
-			MatchList.Add(MatchManager.GetMatchByID(id));
+
+			var MatchList = new List<Match> {MatchManager.GetMatchByID(id)};
 			return JsonConvert.SerializeObject(MatchList);
 		}
 
 		// POST GameAPI/Match/New
 		[HttpPost("Matches")]
 		public string PostNewMatch([FromBody] Match value) {
-			string response = "NEW MATCH REQUEST WITH NAME " + value.Name;// + "AND ID " + value.ID;
-			int mID = MatchManager.CreateNewMatch(value.Name);
+			var response = "NEW MATCH REQUEST WITH NAME " + value.Name;// + "AND ID " + value.ID;
+			var mID = MatchManager.CreateNewMatch(value.Name);
 			response = mID.ToString();
 			//Console.WriteLine(value.ID);
 			//response += mID + "!";
@@ -106,7 +85,31 @@ namespace TesinaServer.Views.GameAPI {
 
 		// Players
 
+		[HttpGet("Matches/{mID?}/Players/{pid?}")]
+		public string GetPlayerByID(int mid = -1, int pid = -1) {
+			if (mid != -1 && pid != -1) {
+				return JsonConvert.SerializeObject(MatchManager.GetPlayer(mid, pid));
+			}
+			return JsonConvert.SerializeObject(MatchManager.GetAllPlayers(mid));
+		}
 
+		[HttpPost("Matches/{mid}/Players/{username}")]
+		public string AddPlayer(int mid, string username) {
+			var p = MatchManager.AddPlayer(mid, username);
+			return p.ToSerializedData();
+		}
+		
+		[HttpPut("Matches/{mid}/Players")]
+		public string UpdatePlayer(int mid, [FromBody]Player p) {
+			MatchManager.UpdatePlayer(mid, p);
+			return "ok";
+		}
+
+		[HttpDelete("Matches/{mid}/Players/{pid}")]
+		public string DeletePlayer(int mid, int pid) {
+			MatchManager.DeletePlayer(mid, pid);
+			return "";
+		}
 
 	}
 }

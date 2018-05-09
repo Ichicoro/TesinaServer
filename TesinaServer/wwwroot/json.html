@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>json</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+                $(function () {
+            var match = {MatchID :123123, MatchName:"HP"};
+            console.log("prova");
+            $.ajax({
+                type: "POST",
+                data :JSON.stringify(match),
+                url: "GameAPI/Match/New",
+                contentType: "application/json"
+            }).done((msg) => {
+                $("body").html("<h1>Stringified JSON</h1><p>" + JSON.stringify(match) + "</p>                    <h1>RESPONSE</h1><p>"+msg+"</p>");
+            });
+        });
+    </script>
+</head>
+<body>
+    ciao
+</body>
+</html>
