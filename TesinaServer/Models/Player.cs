@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace TesinaServer.Models {
     public class Player {
@@ -9,6 +8,7 @@ namespace TesinaServer.Models {
 		public float Rotation { get; set; }
         public string Username { get; set; }
 		public int MatchID { get; set; }
+	    public int TeamID { get; set; }
 
         public Player(string Username, int ID, int MatchID) {
 			this.ID = ID;

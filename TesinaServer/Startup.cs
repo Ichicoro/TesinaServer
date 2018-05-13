@@ -29,6 +29,12 @@ namespace TesinaServer {
             }
 
             app.UseStaticFiles();
+            
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "gameconfig",
+                    template: "{controller=Home}/Game/{id?}");
+            });
 
             app.UseMvc(routes => {
                 routes.MapRoute(

@@ -14,6 +14,7 @@
         <e p="Controllers" t="Include">
           <e p="GameAPIController.cs" t="Include" />
           <e p="HomeController.cs" t="Include" />
+          <e p="WebServicesController.cs" t="Include" />
         </e>
         <e p="Helpers" t="Include">
           <e p="MatchManager.cs" t="Include" />
@@ -44,6 +45,7 @@
           <e p="Home" t="Include">
             <e p="About.cshtml" t="Include" />
             <e p="Contact.cshtml" t="Include" />
+            <e p="Game.cshtml" t="Include" />
             <e p="Index.cshtml" t="Include" />
           </e>
           <e p="Shared" t="Include">

@@ -61,9 +61,9 @@ namespace TesinaServer.Views.GameAPI {
 
 		// POST GameAPI/Match/New
 		[HttpPost("Matches")]
-		public string PostNewMatch([FromBody] Match value) {
-			var response = "NEW MATCH REQUEST WITH NAME " + value.Name;// + "AND ID " + value.ID;
-			var mID = MatchManager.CreateNewMatch(value.Name);
+		public string PostNewMatch([FromBody] string value) {
+			var response = "NEW MATCH REQUEST WITH NAME " + value;// + "AND ID " + value.ID;
+			var mID = MatchManager.CreateNewMatch(value);
 			response = mID.ToString();
 			//Console.WriteLine(value.ID);
 			//response += mID + "!";

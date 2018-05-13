@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using TesinaServer.Models;
 
 namespace TesinaServer.Controllers {
@@ -16,6 +17,11 @@ namespace TesinaServer.Controllers {
 
         public IActionResult About() {
             ViewData["Message"] = "Your application description page.";
+
+            return View();
+        }
+
+        public IActionResult Game(int id = -1) {
 
             return View();
         }
