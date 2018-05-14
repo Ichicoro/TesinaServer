@@ -59,16 +59,15 @@ namespace TesinaServer.Views.GameAPI {
 			return JsonConvert.SerializeObject(MatchList);
 		}
 
-		// POST GameAPI/Match/New
+		// POST GameAPI/Matches
 		[HttpPost("Matches")]
-		public string PostNewMatch([FromBody] string value) {
-			var response = "NEW MATCH REQUEST WITH NAME " + value;// + "AND ID " + value.ID;
-			var mID = MatchManager.CreateNewMatch(value);
-			response = mID.ToString();
+		public string PostNewMatch() {
+			// + "AND ID " + value.ID;
+			var mID = MatchManager.CreateNewMatch();
 			//Console.WriteLine(value.ID);
 			//response += mID + "!";
 			//Console.WriteLine(response);
-			return response;
+			return mID.ToString();
 		}
 
 		[HttpPut("matches/{id}")]

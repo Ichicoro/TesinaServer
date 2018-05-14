@@ -6,11 +6,9 @@ using Newtonsoft.Json;
 namespace TesinaServer.Models {
     public class Match {
         public int ID { get; set; }
-        public string Name { get; set; }
         public List<Player> PlayerList { get; set; }
 
-        public Match(string Name, int ID) {
-            this.Name = Name;
+        public Match(int ID) {
             this.ID = ID;
             this.PlayerList = new List<Player>();
         }
@@ -48,7 +46,7 @@ namespace TesinaServer.Models {
 		    return 0;
 	    }
 
-        public override string ToString() => "[MatchID: " + this.ID + "; MatchName: " + this.Name + "]";
+        public override string ToString() => "[MatchID: " + this.ID + "]";
 
         public string ToSerializedData() => JsonConvert.SerializeObject(this);
     }

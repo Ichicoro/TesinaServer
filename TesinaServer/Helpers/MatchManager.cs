@@ -18,13 +18,13 @@ namespace TesinaServer.Helpers {
             return null;
         }
 
-        public static int CreateNewMatch(string MatchName) {
+        public static int CreateNewMatch() {
             var r = new Random();
             var MatchID = r.Next();
             while (GetMatchByID(MatchID) != null || MatchID == 0) {
                 MatchID = r.Next();
             }
-            var m = new Match(MatchName, MatchID);
+            var m = new Match(MatchID);
             Matches.Add(m);
             return MatchID;
         }

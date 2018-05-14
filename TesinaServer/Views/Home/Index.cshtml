@@ -15,8 +15,9 @@
                     type: "POST",
                     url: '@Url.Action("PostNewMatch", "GameAPI")',
                     contentType: "application/json; charset=utf-8",
-                    data: { value: "testing" },
+                    data: { "value": "testing" },
                     dataType: "json",
+                    accept: 'application/json',
                     success: (data) => { alert(data); },
                     error: (error) => { console.log(error); }
                 });
