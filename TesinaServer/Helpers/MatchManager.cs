@@ -4,7 +4,8 @@ using TesinaServer.Models;
 
 namespace TesinaServer.Helpers {
     public static class MatchManager {
-        private static List<Match> Matches = new List<Match>();
+	    // ReSharper disable once FieldCanBeMadeReadOnly.Local
+	    private static List<Match> Matches = new List<Match>();
 
         public static List<Match> GetAllMatches() {
             return Matches;
@@ -28,6 +29,15 @@ namespace TesinaServer.Helpers {
             Matches.Add(m);
             return MatchID;
         }
+	    
+	    public static int CreateNewMatch(int MatchID) {
+		    while (GetMatchByID(MatchID) != null || MatchID == 0) {
+			    return 0;
+		    }
+		    var m = new Match(MatchID);
+		    Matches.Add(m);
+		    return MatchID;
+	    }
 
         public static int DeleteMatch(int id) {
             foreach (var match in Matches) {

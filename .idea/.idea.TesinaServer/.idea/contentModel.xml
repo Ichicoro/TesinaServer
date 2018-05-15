@@ -47,6 +47,7 @@
             <e p="Contact.cshtml" t="Include" />
             <e p="Game.cshtml" t="Include" />
             <e p="Index.cshtml" t="Include" />
+            <e p="Testing.cshtml" t="Include" />
           </e>
           <e p="Shared" t="Include">
             <e p="_Layout.cshtml" t="Include" />

@@ -1,0 +1,214 @@
+﻿@{
+    ViewData["Title"] = "Testing Page";
+}
+
+<head>
+    <title>ServerTesina</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <script src="~/js/jquery.js"></script>
+    <style>
+        body {
+            font-family: "Roboto Mono";
+        }
+        button, input {
+            font-family: "roboto Mono"
+        }
+    </style>
+    <script>
+        $(document).ready(() => {
+            const matchList = $('#matchList');
+            const playerList = $('#playerList');
+            const playerNameBox = $('#playerNameBox');
+            const playerInfo = $('#playerInfo');
+
+
+            const getSelectedMatch = () => {
+                return $("#matchList option").filter(":selected").val();
+            }
+            const getSelectedPlayer = () => {
+                return $("#playerList option").filter(":selected").val();
+            }
+
+            const refreshPlayerList = () => {
+                $.ajax({
+                    type: "GET",
+                    url: `@Url.Action("GetMatch", "GameAPI")/${getSelectedMatch()}/Players`,
+                    contentType: "application/json; charset=utf-8",
+                    data: { value: "testing" },
+                    dataType: "json",
+                    success: (data) => {
+                        console.log(data);
+                        let htmlcode = "";
+                        data.forEach((p) => {
+                            htmlcode += `<option value=${p.ID}>${p.Username} (${p.ID})</option>`;
+                        });
+                        playerList.html(htmlcode);
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        alert("There's been a problem processing your request D: (Check console for more info!)")
+                    }
+                });
+            };
+
+            const refreshMatchList = () => {
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("GetMatch", "GameAPI")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { value: "testing" },
+                    dataType: "json",
+                    success: (data) => {
+                        console.log(data);
+                        let htmlcode = "";
+                        data.forEach((m) => {
+                            htmlcode += `<option value=${m.ID}>${m.ID}</option>`
+                        });
+                        matchList.html(htmlcode);
+                        refreshPlayerList();
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        alert("There's been a problem processing your request D: (Check console for more info!)")
+                    }
+                });
+            };
+
+            const getPlayerInfo = () => {
+                return $.ajax({
+                    type: "GET",
+                    url: `@Url.Action("PostNewMatch", "GameAPI")/${getSelectedMatch()}/Players/${getSelectedPlayer()}`,
+                    success: (data) => {
+                        return data;
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        alert("There's been a problem processing your request D: (Check console for more info!)")
+                    }
+                });
+            };
+
+
+            $('#newMatchBtn').click(() => {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("PostNewMatch", "GameAPI")',
+                    contentType: "application/json; charset=utf-8",
+                    data: { "value": "testing" },
+                    dataType: "json",
+                    accept: 'application/json',
+                    success: (data) => {
+                        alert(data);
+                        refreshMatchList();
+                    },
+                    error: (error) => { console.log(error); }
+                });
+            });
+            $('#getGamesBtn').click(() => {
+                refreshMatchList();
+            });
+            $('#delMatchBtn').click(() => {
+                $.ajax({
+                    type: "DELETE",
+                    url: `@Url.Action("PostNewMatch","GameAPI")/${getSelectedMatch()}`,
+                    success: (data) => {
+                        console.log(data);
+                        refreshMatchList();
+                    },
+                    error: (error) => { console.log(error); }
+                });
+            });
+            $('#addPlayerBtn').click(() => {
+                if (playerNameBox.val().length === 0) return;
+                $.ajax({
+                    type: "POST",
+                    url: `@Url.Action("PostNewMatch","GameAPI")/${getSelectedMatch()}/Players/${playerNameBox.val()}`,
+                    success: (data) => {
+                        console.log(data);
+                        refreshPlayerList();
+                    },
+                    error: (error) => { console.log(error); }
+                });
+            });
+            $('#delPlayerBtn').click(() => {
+                $.ajax({
+                    type: "DELETE",
+                    url: `@Url.Action("PostNewMatch","GameAPI")/${getSelectedMatch()}/Players/${getSelectedPlayer()}`,
+                    success: (data) => {
+                        console.log(data);
+                        refreshMatchList();
+                    },
+                    error: (error) => { console.log(error); }
+                });
+            });
+
+            $('#getPlayersBtn').click(() => {
+                refreshPlayerList();
+            });
+
+
+            matchList.change(() => {
+                refreshPlayerList();
+            });
+
+//            playerList.change(() => {
+//                playerInfo.text(JSON.stringify(getPlayerInfo()));
+//            });
+
+            // On Startup!
+            refreshMatchList();
+            console.log(getSelectedMatch());
+
+        });
+        
+        
+    </script>
+</head>
+
+
+<body>
+@* <div id="content"> *@
+@*     <h2 id="titolo"><span class="rossobus">Paint</span><span class="aranciobus">H</span><span class="blubus">U</span><span class="verdebus">D</span></h2> *@
+@*     <div id="logodiv"><img src="~/images/tesinalogo.png" id="tesinalogo" alt="PaintHUD Logo"></div> *@
+@*     <div class="twochoicescontainer"><div class="twochoicesdiv" id="leftdiv"> *@
+@*             <h3>I want to create a paintball game!</h3> *@
+@*             <button id="creategamebutton">Create a new game!</button> *@
+@*         </div><div class="twochoicesdiv" id="rightdiv"> *@
+@*             <h3>I've already created a paintball game!</h3> *@
+@*             Code: <input type="number" maxlength="6" id="currentgameid"/><button id="gotogamebutton">Go!</button> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
+@*<img id="sfondo_dx" class="sfondi" src="images/sfondi/sfondo_dx.png"/>
+<img id="sfondo_sx" class="sfondi" src="images/sfondi/sfondo_sx.png"/>*@
+<h1>PaintHUD Test UI</h1>
+<h2>Matches</h2>
+<button id="newMatchBtn">Create new match</button>
+<br/>
+Match: <select id="matchList"></select><button id="getGamesBtn">Refresh</button> => <button id="delMatchBtn">Delete Match</button>
+<h2>Players</h2>
+<input type="text" id="playerNameBox"/><button id="addPlayerBtn">Add Player</button>
+<br/>
+Player: <select id="playerList"></select><button id="getPlayersBtn">Refresh</button> => <button id="delPlayerBtn">Delete Player</button>
+<br/>
+<span id="playerInfo"></span>
+
+
+</body>
+
+
+    <environment include="Development">
+        <script src="~/js/jquery.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+

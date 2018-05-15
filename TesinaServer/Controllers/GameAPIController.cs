@@ -70,6 +70,12 @@ namespace TesinaServer.Views.GameAPI {
 			return mID.ToString();
 		}
 
+		[HttpPost("Matches/{id}")]
+		public string DebugNewMatch(int id) {
+			var mID = MatchManager.CreateNewMatch(id);
+			return mID.ToString();
+		}
+
 		[HttpPut("matches/{id}")]
 		public string UpdateMatch([FromBody] Match match) {
 			return "Not yet implemented";
@@ -84,10 +90,10 @@ namespace TesinaServer.Views.GameAPI {
 
 		// Players
 
-		[HttpGet("Matches/{mID?}/Players/{pid?}")]
+		[HttpGet("Matches/{mid?}/Players/{pid?}")]
 		public string GetPlayerByID(int mid = -1, int pid = -1) {
 			if (mid != -1 && pid != -1) {
-				return JsonConvert.SerializeObject(MatchManager.GetPlayer(mid, pid));
+				return JsonConvert.SerializeObject(MatchManager.GetPlayer(pid, mid));
 			}
 			return JsonConvert.SerializeObject(MatchManager.GetAllPlayers(mid));
 		}

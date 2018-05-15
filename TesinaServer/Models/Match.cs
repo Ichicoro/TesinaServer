@@ -14,13 +14,13 @@ namespace TesinaServer.Models {
         }
 
 		public Player GetPlayer(int pID) {
-			foreach (var p in PlayerList)
+			foreach (var p in PlayerList.ToArray())
 				if (p.ID == pID) return p;
 			return null;
 		}
 
 		public int DeletePlayer(int pID) {
-			foreach (var p in PlayerList)
+			foreach (var p in PlayerList.ToArray())
 				if (p.ID == pID) {
 					PlayerList.Remove(p);
 					return 0;
@@ -29,7 +29,7 @@ namespace TesinaServer.Models {
 		}
 
 		public int DeletePlayer(Player pl) {
-			foreach (var p in PlayerList)
+			foreach (var p in PlayerList.ToArray())
 				if (p.Equals(pl)) {
 					PlayerList.Remove(pl);
 					return 0;
@@ -38,7 +38,7 @@ namespace TesinaServer.Models {
 		}
 
 	    public int UpdatePlayer(Player p) {
-		    foreach (var pl in PlayerList) {
+		    foreach (var pl in PlayerList.ToArray()) {
 			    if (pl.ID != p.ID) continue;
 			    PlayerList.Remove(pl);
 			    PlayerList.Add(p);

@@ -13,6 +13,7 @@ namespace TesinaServer.Controllers {
         // Let's return a PartialView() only because we want completely
         // custom styling for our Index (landing) page.
         public IActionResult Index() => PartialView();
+        public IActionResult Testing() => PartialView();
 
 
         public IActionResult About() {
