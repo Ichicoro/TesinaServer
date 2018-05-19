@@ -9,12 +9,16 @@
     <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
     <script src="~/js/jquery.js"></script>
     <style>
-        body {
+        body, button, input {
             font-family: "Roboto Mono";
         }
-        button, input {
-            font-family: "roboto Mono"
-        }
+        .rossobus { color: #E94650; }
+
+        .aranciobus { color: #F39028; }
+
+        .blubus { color: #3897AC; }
+
+        .verdebus { color: #96BE1F; }
     </style>
     <script>
         $(document).ready(() => {
@@ -147,6 +151,14 @@
             $('#getPlayersBtn').click(() => {
                 refreshPlayerList();
             });
+            
+            $('#copyMatchIdBtn').click(() => {
+                navigator.clipboard.writeText(getSelectedMatch());
+            });
+            
+            $('#copyPlayerIdBtn').click(() => {
+                navigator.clipboard.writeText(getSelectedPlayer());
+            });
 
 
             matchList.change(() => {
@@ -183,15 +195,15 @@
 @* </div> *@
 @*<img id="sfondo_dx" class="sfondi" src="images/sfondi/sfondo_dx.png"/>
 <img id="sfondo_sx" class="sfondi" src="images/sfondi/sfondo_sx.png"/>*@
-<h1>PaintHUD Test UI</h1>
+<h1><span class="rossobus">Paint</span><span class="aranciobus">H</span><span class="blubus">U</span><span class="verdebus">D</span> Test Page</h1>
 <h2>Matches</h2>
 <button id="newMatchBtn">Create new match</button>
 <br/>
-Match: <select id="matchList"></select><button id="getGamesBtn">Refresh</button> => <button id="delMatchBtn">Delete Match</button>
+Match: <select id="matchList"></select><button id="getGamesBtn">Refresh</button> => <button id="delMatchBtn">Delete Match</button><button id="copyMatchIdBtn">Copy ID</button>
 <h2>Players</h2>
 <input type="text" id="playerNameBox"/><button id="addPlayerBtn">Add Player</button>
 <br/>
-Player: <select id="playerList"></select><button id="getPlayersBtn">Refresh</button> => <button id="delPlayerBtn">Delete Player</button>
+Player: <select id="playerList"></select><button id="getPlayersBtn">Refresh</button> => <button id="delPlayerBtn">Delete Player</button><button id="copyPlayerIdBtn">Copy ID</button>
 <br/>
 <span id="playerInfo"></span>
 
