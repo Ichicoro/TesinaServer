@@ -22,7 +22,7 @@ namespace TesinaServer.Helpers {
         public static int CreateNewMatch() {
             var r = new Random();
             var MatchID = r.Next();
-            while (GetMatchByID(MatchID) != null || MatchID == 0) {
+            while (GetMatchByID(MatchID) != null || MatchID == 0 || MatchID > 99999) {
                 MatchID = r.Next();
             }
             var m = new Match(MatchID);

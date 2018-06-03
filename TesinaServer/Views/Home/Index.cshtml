@@ -19,7 +19,7 @@
                     data: { "value": "testing" },
                     dataType: "json",
                     accept: 'application/json',
-                    success: (data) => { alert(data); },
+                    success: (data) => { alert(`Il match è stato creato! ID = ${data}`); },
                     error: (error) => { console.log(error); }
                 });
             });

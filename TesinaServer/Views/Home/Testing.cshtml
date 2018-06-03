@@ -40,7 +40,7 @@
                     type: "GET",
                     url: `@Url.Action("GetMatch", "GameAPI")/${getSelectedMatch()}/Players`,
                     contentType: "application/json; charset=utf-8",
-                    data: { value: "testing" },
+                    //data: { value: "testing" },
                     dataType: "json",
                     success: (data) => {
                         console.log(data);
@@ -62,34 +62,34 @@
                     type: "GET",
                     url: '@Url.Action("GetMatch", "GameAPI")',
                     contentType: "application/json; charset=utf-8",
-                    data: { value: "testing" },
+                    //data: { value: "testing" },
                     dataType: "json",
                     success: (data) => {
                         console.log(data);
                         let htmlcode = "";
                         data.forEach((m) => {
-                            htmlcode += `<option value=${m.ID}>${m.ID}</option>`
+                            htmlcode += `<option value=${m.ID}>${m.ID}</option>`;
                         });
                         matchList.html(htmlcode);
                         refreshPlayerList();
                     },
                     error: (error) => {
                         console.log(error);
-                        alert("There's been a problem processing your request D: (Check console for more info!)")
+                        alert("There's been a problem processing your request D: (Check console for more info!)");
                     }
                 });
             };
 
-            const getPlayerInfo = () => {
+            const refreshPlayerData = () => {
                 return $.ajax({
                     type: "GET",
                     url: `@Url.Action("PostNewMatch", "GameAPI")/${getSelectedMatch()}/Players/${getSelectedPlayer()}`,
                     success: (data) => {
-                        return data;
+                        
                     },
                     error: (error) => {
                         console.log(error);
-                        alert("There's been a problem processing your request D: (Check console for more info!)")
+                        alert("There's been a problem processing your request D: (Check console for more info!)");
                     }
                 });
             };
@@ -100,11 +100,11 @@
                     type: "POST",
                     url: '@Url.Action("PostNewMatch", "GameAPI")',
                     contentType: "application/json; charset=utf-8",
-                    data: { "value": "testing" },
+                    //data: { "value": "testing" },
                     dataType: "json",
                     accept: 'application/json',
                     success: (data) => {
-                        alert(data);
+                        alert(`Il match è stato creato! ID = ${data}`);
                         refreshMatchList();
                     },
                     error: (error) => { console.log(error); }
@@ -205,7 +205,9 @@ Match: <select id="matchList"></select><button id="getGamesBtn">Refresh</button>
 <br/>
 Player: <select id="playerList"></select><button id="getPlayersBtn">Refresh</button> => <button id="delPlayerBtn">Delete Player</button><button id="copyPlayerIdBtn">Copy ID</button>
 <br/>
-<span id="playerInfo"></span>
+<span id="playerInfo">
+    <p>Name: -</p><input type="text" id="playerNameBox"/><button id="addPlayerBtn">Add Player</button>
+</span>
 
 
 </body>

@@ -15,8 +15,6 @@
 }
 
 body {
-    /*background-image: linear-gradient(to bottom right, rgb(139,0,0), rgb(255,177,50));
-    /*background-image: url("../images/brightbg.jpg"); */
     font-family: "Roboto Mono", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     font-size: 1rem;
     margin: 0;
