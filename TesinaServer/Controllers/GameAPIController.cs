@@ -93,7 +93,7 @@ namespace TesinaServer.Views.GameAPI {
 		[HttpGet("Matches/{mid?}/Players/{pid?}")]
 		public string GetPlayerByID(int mid = -1, int pid = -1) {
 			if (mid != -1 && pid != -1) {
-				return JsonConvert.SerializeObject(MatchManager.GetPlayer(pid, mid));
+				return JsonConvert.SerializeObject(MatchManager.GetPlayer(pid));
 			}
 			return JsonConvert.SerializeObject(MatchManager.GetAllPlayers(mid));
 		}

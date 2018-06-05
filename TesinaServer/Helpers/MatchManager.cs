@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Timers;
 using TesinaServer.Models;
 
 namespace TesinaServer.Helpers {
     public static class MatchManager {
 	    // ReSharper disable once FieldCanBeMadeReadOnly.Local
 	    private static List<Match> Matches = new List<Match>();
+	    private static List<Timer> Timers = new List<Timer>();
 
         public static List<Match> GetAllMatches() {
             return Matches;

@@ -18,7 +18,6 @@
         </e>
         <e p="Helpers" t="Include">
           <e p="MatchManager.cs" t="Include" />
-          <e p="PlayerManager.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
           <e p="ErrorViewModel.cs" t="Include" />
