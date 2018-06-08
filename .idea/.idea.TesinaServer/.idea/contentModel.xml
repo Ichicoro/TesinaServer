@@ -8,7 +8,7 @@
         <e p=".bowerrc" t="Include" />
         <e p="appsettings.Development.json" t="Include" />
         <e p="appsettings.json" t="Include" />
-        <e p="Bin" t="ExcludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
         <e p="bower.json" t="Include" />
         <e p="bundleconfig.json" t="Include" />
         <e p="Controllers" t="Include">

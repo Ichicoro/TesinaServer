@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Timers;
+using System.Threading;
 using TesinaServer.Models;
 
 namespace TesinaServer.Helpers {
     public static class MatchManager {
 	    // ReSharper disable once FieldCanBeMadeReadOnly.Local
 	    private static List<Match> Matches = new List<Match>();
-	    private static List<Timer> Timers = new List<Timer>();
+	    private static List<(int MatchID, Timer Timer)> Timers = new List<(int MatchID, Timer Timer)>();
+
+	    public static int DeletionTimeout = 600 * 1000;
 
         public static List<Match> GetAllMatches() {
             return Matches;
@@ -23,21 +25,28 @@ namespace TesinaServer.Helpers {
 
         public static int CreateNewMatch() {
             var r = new Random();
-            var MatchID = r.Next();
-            while (GetMatchByID(MatchID) != null || MatchID == 0 || MatchID > 99999) {
-                MatchID = r.Next();
-            }
+            int MatchID;
+	        do {
+		        MatchID = r.Next();
+	        } while (GetMatchByID(MatchID) != null || MatchID == 0 || MatchID > 99999);
             var m = new Match(MatchID);
             Matches.Add(m);
+	        var t = new Timer((state) => DeleteMatch(m.ID), null, DeletionTimeout, Timeout.Infinite);
+		    
+	        Timers.Add((m.ID, t));
+	        ResetTimeout(m.ID);
             return MatchID;
         }
 	    
 	    public static int CreateNewMatch(int MatchID) {
-		    while (GetMatchByID(MatchID) != null || MatchID == 0) {
+		    if (GetMatchByID(MatchID) != null || MatchID == 0)
 			    return 0;
-		    }
 		    var m = new Match(MatchID);
 		    Matches.Add(m);
+		    var t = new Timer((state) => DeleteMatch(m.ID), null, DeletionTimeout, Timeout.Infinite);
+		    
+		    Timers.Add((m.ID, t));
+		    ResetTimeout(m.ID);
 		    return MatchID;
 	    }
 
@@ -47,6 +56,8 @@ namespace TesinaServer.Helpers {
                     Matches.Remove(match);
                     return 0;
             }
+
+	        DeleteTimeout(id);
             return 1;
         }
 
@@ -58,6 +69,7 @@ namespace TesinaServer.Helpers {
 				if (match.ID == MatchID)
 					match.PlayerList.Add(p);
 			}
+			ResetTimeout(MatchID);
 			return p;
 		}
 
@@ -93,6 +105,7 @@ namespace TesinaServer.Helpers {
 			foreach (var m in Matches) {
 				var p = m.GetPlayer(PlayerID);
 				if (p != null)
+					ResetTimeout(m.ID);
 					m.DeletePlayer(p);
 			}
 			return -1;
@@ -105,6 +118,7 @@ namespace TesinaServer.Helpers {
 				if (p != null)
 					m.DeletePlayer(p);
 			}
+			ResetTimeout(MatchID);
 			return -1;
 		}
 
@@ -113,7 +127,32 @@ namespace TesinaServer.Helpers {
 		    Matches.Remove(m);
 		    m.UpdatePlayer(p);
 		    Matches.Add(m);
+		    ResetTimeout(mid);
 		    return 0;
+	    }
+
+	    public static bool ResetTimeout(int mid) {
+		    foreach (var tim in Timers) {
+			    if (tim.MatchID == mid) {
+				    Console.WriteLine($"Resetting Timeout for Match with ID {mid}");
+				    tim.Timer.Change(DeletionTimeout, Timeout.Infinite);
+				    return true;
+			    }
+		    }
+
+		    return false;
+	    }
+	    
+	    public static bool DeleteTimeout(int mid) {
+		    foreach (var tim in Timers) {
+			    if (tim.MatchID == mid) {
+				    Console.WriteLine($"Deleting Timeout for Match with ID {mid}");
+				    Timers.Remove(tim);
+				    return true;
+			    }
+		    }
+
+		    return false;
 	    }
 
     }
