@@ -61,10 +61,10 @@ namespace TesinaServer.Helpers {
             return 1;
         }
 
-		public static Player AddPlayer(int MatchID, string Username) {
+		public static Player AddPlayer(int MatchID, string Username, int TeamID) {
 			var r = new Random();
 			var id = r.Next();
-			var p = new Player(Username, id, MatchID);
+			var p = new Player(Username, id, MatchID, TeamID);
 			foreach (var match in Matches) {
 				if (match.ID == MatchID)
 					match.PlayerList.Add(p);

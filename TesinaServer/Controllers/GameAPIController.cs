@@ -99,8 +99,8 @@ namespace TesinaServer.Views.GameAPI {
 		}
 
 		[HttpPost("Matches/{mid}/Players/{username}")]
-		public string AddPlayer(int mid, string username) {
-			var p = MatchManager.AddPlayer(mid, username);
+		public string AddPlayer(int mid, string username, int tid) {
+			var p = MatchManager.AddPlayer(mid, username, tid);
 			return p.ToSerializedData();
 		}
 		
