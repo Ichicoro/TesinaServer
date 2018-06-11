@@ -26,6 +26,7 @@
             const playerList = $('#playerList');
             const playerNameBox = $('#playerNameBox');
             const playerInfo = $('#playerInfo');
+            const autoUpdateCheckBox = $('#autoUpdateCheckBox');
 
 
             const getSelectedMatch = () => {
@@ -171,6 +172,12 @@
 
             // On Startup!
             refreshMatchList();
+            
+            setInterval(() => {
+                if (autoUpdateCheckBox.is(":checked"))
+                    refreshMatchList();
+            }, 1000);
+            
             console.log(getSelectedMatch());
 
         });
@@ -196,6 +203,7 @@
 @*<img id="sfondo_dx" class="sfondi" src="images/sfondi/sfondo_dx.png"/>
 <img id="sfondo_sx" class="sfondi" src="images/sfondi/sfondo_sx.png"/>*@
 <h1><span class="rossobus">Paint</span><span class="aranciobus">H</span><span class="blubus">U</span><span class="verdebus">D</span> Test Page</h1>
+<input id="autoUpdateCheckBox" type="checkbox">Autoupdate
 <h2>Matches</h2>
 <button id="newMatchBtn">Create new match</button>
 <br/>

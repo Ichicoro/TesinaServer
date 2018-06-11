@@ -9,6 +9,7 @@ namespace TesinaServer.Models {
         public string Username { get; set; }
         public int MatchID { get; set; }
         public int TeamID { get; set; }
+        public int State { get; set; } // -1 if the Player's waiting, 0 if they're alive and 1 if they're dead
 
 
         public Player(string Username, int ID, int MatchID, int TeamID)
@@ -20,6 +21,7 @@ namespace TesinaServer.Models {
             this.Username = Username;
             this.MatchID = MatchID;
             this.TeamID = TeamID;
+            this.State = -1;
         }
 
         public bool Equals(Player p)
@@ -48,6 +50,7 @@ namespace TesinaServer.Models {
             if (!Username.Equals(p.Username)) return false;
             if (MatchID != p.MatchID) return false;
             if (TeamID != p.MatchID) return false;
+            if (State != p.State) return false;
             return true;
         }
 
