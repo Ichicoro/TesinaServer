@@ -12,6 +12,7 @@
         body, button, input {
             font-family: "Roboto Mono";
         }
+
         .rossobus { color: #E94650; }
 
         .aranciobus { color: #F39028; }
@@ -137,6 +138,30 @@
                     error: (error) => { console.log(error); }
                 });
             });
+            $('#addPlayerBtn1').click(() => {
+                if (playerNameBox.val().length === 0) return;
+                $.ajax({
+                    type: "POST",
+                    url: `@Url.Action("PostNewMatch","GameAPI")/${getSelectedMatch()}/Players/${playerNameBox.val()}/1`,
+                    success: (data) => {
+                        console.log(data);
+                        refreshPlayerList();
+                    },
+                    error: (error) => { console.log(error); }
+                });
+            });
+            $('#addPlayerBtn2').click(() => {
+                if (playerNameBox.val().length === 0) return;
+                $.ajax({
+                    type: "POST",
+                    url: `@Url.Action("PostNewMatch","GameAPI")/${getSelectedMatch()}/Players/${playerNameBox.val()}/2`,
+                    success: (data) => {
+                        console.log(data);
+                        refreshPlayerList();
+                    },
+                    error: (error) => { console.log(error); }
+                });
+            });
             $('#delPlayerBtn').click(() => {
                 $.ajax({
                     type: "DELETE",
@@ -209,7 +234,7 @@
 <br/>
 Match: <select id="matchList"></select><button id="getGamesBtn">Refresh</button> => <button id="delMatchBtn">Delete Match</button><button id="copyMatchIdBtn">Copy ID</button>
 <h2>Players</h2>
-<input type="text" id="playerNameBox"/><button id="addPlayerBtn">Add Player</button>
+<input type="text" id="playerNameBox"/><button id="addPlayerBtn">Add Player</button><button id="addPlayerBtn1">Add Player to team 1</button><button id="addPlayerBtn2">Add Player to team 2</button>
 <br/>
 Player: <select id="playerList"></select><button id="getPlayersBtn">Refresh</button> => <button id="delPlayerBtn">Delete Player</button><button id="copyPlayerIdBtn">Copy ID</button>
 <br/>

@@ -9,7 +9,7 @@ namespace TesinaServer.Helpers {
 	    private static List<Match> Matches = new List<Match>();
 	    private static List<(int MatchID, Timer Timer)> Timers = new List<(int MatchID, Timer Timer)>();
 
-	    public static int DeletionTimeout = 600 * 1000;
+	    public static int DeletionTimeout = 6*600 * 1000;
 
         public static List<Match> GetAllMatches() {
             return Matches;
@@ -41,8 +41,7 @@ namespace TesinaServer.Helpers {
 	    public static int CreateNewMatch(int MatchID) {
 		    if (GetMatchByID(MatchID) != null || MatchID == 0)
 			    return 0;
-		    var m = new Match(MatchID);
-		    Matches.Add(m);
+		    var m = new Match(MatchID);		    Matches.Add(m);
 		    var t = new Timer((state) => DeleteMatch(m.ID), null, DeletionTimeout, Timeout.Infinite);
 		    
 		    Timers.Add((m.ID, t));
@@ -153,6 +152,24 @@ namespace TesinaServer.Helpers {
 		    }
 
 		    return false;
+	    }
+
+	    public static bool StartMatch(int mid) {
+		    var m = GetMatchByID(mid);
+		    Matches.Remove(m);
+		    m.StartMatch();
+		    Matches.Add(m);
+		    ResetTimeout(mid);
+		    return true;
+	    }
+	    
+	    public static bool StopMatch(int mid) {
+		    var m = GetMatchByID(mid);
+		    Matches.Remove(m);
+		    m.StopMatch();
+		    Matches.Add(m);
+		    ResetTimeout(mid);
+		    return true;
 	    }
 
     }

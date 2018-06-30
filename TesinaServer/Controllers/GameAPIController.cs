@@ -75,6 +75,18 @@ namespace TesinaServer.Views.GameAPI {
 			var mID = MatchManager.CreateNewMatch(id);
 			return mID.ToString();
 		}
+		
+		[HttpPost("Matches/{id}/Start")]
+		public string StartMatch(int id) {
+			MatchManager.StartMatch(id);
+			return "0";
+		}
+
+		[HttpPost("Matches/{id}/Stop")]
+		public string StopMatch(int id) {
+			MatchManager.StopMatch(id);
+			return "0";
+		}
 
 		[HttpPut("matches/{id}")]
 		public string UpdateMatch([FromBody] Match match) {
@@ -98,7 +110,7 @@ namespace TesinaServer.Views.GameAPI {
 			return JsonConvert.SerializeObject(MatchManager.GetAllPlayers(mid));
 		}
 
-		[HttpPost("Matches/{mid}/Players/{username}")]
+		[HttpPost("Matches/{mid}/Players/{username}/{tid}")]
 		public string AddPlayer(int mid, string username, int tid) {
 			var p = MatchManager.AddPlayer(mid, username, tid);
 			return p.ToSerializedData();

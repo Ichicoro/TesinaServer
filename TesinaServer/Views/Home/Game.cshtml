@@ -1,14 +1,141 @@
-﻿@model TModel
+﻿@{
+    ViewData["Title"] = "Game Page";
+}
 
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title>title</title>
+    <title>Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <script src="~/js/jquery.js"></script>
+    <style>
+        body, button, input {
+            font-family: "Roboto Mono";
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        .rossobus { color: #E94650; }
+
+        .aranciobus { color: #F39028; }
+
+        .blubus { color: #3897AC; }
+
+        .verdebus { color: #96BE1F; }
+
+        .tabellone {
+            width: 100vw;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            text-align: center;
+            border: 1px solid gray;
+        }
+
+        td {
+            width: 30em;
+        }
+    </style>
+    <script>
+        $(document).ready(() => {
+            const MatchID = @ViewData["MatchID"];
+            const tabelloneTable = $('#tabellone');
+            console.log(MatchID);
+
+            let match;
+            const refreshMatchList = () => {
+                $.ajax({
+                    type: "GET",
+                    url: `@Url.Action("GetMatch", "GameAPI")`,
+                    contentType: "application/json; charset=utf-8",
+                    //data: { value: "testing" },
+                    dataType: "json",
+                    success: (data) => {
+                        console.log(data);
+                        match = data[0];
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        alert("There's been a problem processing your request D: (Check console for more info!)");
+                    }
+                });
+            };
+
+            $("#iniziaPartitaButton").click(() => {
+                $.ajax({
+                    type: "POST",
+                    url: `@Url.Action("GetMatch", "GameAPI")/${false ? "Stop" : "Start"}`,
+                    contentType: "application/json; charset=utf-8",
+                    //data: { value: "testing" },
+                    dataType: "json",
+                    success: (data) => {
+                        console.log(data);
+                        match = data[0];
+                    },
+                    error: (error) => {
+                        console.log(error);
+                        alert("There's been a problem processing your request D: (Check console for more info!)");
+                    }
+                });
+            });
+            
+            refreshMatchList();
+            setInterval(refreshMatchList, 1000);
+
+            const buildTableHtml = () => {
+                let htmlcode = "<table><tr><th>Team 1</th><th>Team 2</th></tr>";
+                let team1tab = "<table>";
+                let team2tab = "<table>";
+
+                match.PlayerList.forEach((player) => {
+                    let color;
+                    switch (player.State) {
+                        case 0:
+                            color = "verdebus";
+                            break;
+                        case 1:
+                            color = "rossobus";
+                            break;
+                        case -1: default:
+                            color = "blubus";
+                            break
+                    }
+
+                    let cosodaaddare = `<tr><td class="${color}">${player.Username}</td></tr>`;
+                    if (player.TeamID == 1) {
+                        team1tab += cosodaaddare;
+                    } else {
+                        team2tab += cosodaaddare;
+                    }
+                });
+
+                team1tab += "</table>";
+                team2tab += "</table>";
+
+                htmlcode += `<tr><td>${team1tab}</td><td>${team2tab}</td></tr></table>`
+                console.log(htmlcode);
+                return htmlcode;
+            }
+
+            setInterval(() => {
+                tabelloneTable.html(buildTableHtml());
+            },1000);
+        })
+    </script>
 </head>
 <body>
-<div>
-      
-</div>
+<h1><span class="rossobus">Paint</span><span class="aranciobus">H</span><span class="blubus">U</span><span class="verdebus">D</span> Match Control Panel (ID: @ViewData["MatchID"])</h1>
+
+<button id="iniziaPartitaButton">Inizia la partita</button>
+<br/><br/>
+<span id="tabellone"></span>
+
 </body>
 </html>

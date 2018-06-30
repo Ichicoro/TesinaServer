@@ -23,8 +23,8 @@ namespace TesinaServer.Controllers {
         }
 
         public IActionResult Game(int id = -1) {
-
-            return View();
+            ViewData.Add("MatchID", id);
+            return PartialView();
         }
 
 

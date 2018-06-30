@@ -19,7 +19,7 @@
                     data: { "value": "testing" },
                     dataType: "json",
                     accept: 'application/json',
-                    success: (data) => { alert(`Il match è stato creato! ID = ${data}`); },
+                    success: (data) => { location.href = `@Url.Action("Game", "Home")/${data}`; },
                     error: (error) => { console.log(error); }
                 });
             });
@@ -29,20 +29,23 @@
                     return;
                 }
                 $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("GetMatch", "GameAPI")',
+                    type: "GET",
+                    url: `@Url.Action("GetMatch", "GameAPI")/${$('#currentgameid').val()}`,
                     contentType: "application/json; charset=utf-8",
-                    data: { value: "testing" },
+                    //data: { value: "testing" },
                     dataType: "json",
                     success: (data) => {
                         console.log(data);
                         if (data.length === 1 && data[0] !== null) {
                             ajaxresult = data[0].ID;
-                        } 
+                            location.href = `@Url.Action("Game", "Home")/${$('#currentgameid').val()}`;
+                        }
                     },
-                    error: (error) => { console.log(error); alert("There's been a problem processing your request D: (Check console for more info!)") }
+                    error: (error) => {
+                        console.log(error);
+                        alert("There's been a problem processing your request D: (Check console for more info!)")
+                    }
                 });
-                location.href = `@Url.Action("Game", "Home")/${ajaxresult}`;
             });
         });
     </script>

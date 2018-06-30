@@ -45,6 +45,24 @@ namespace TesinaServer.Models {
 		    }
 		    return 0;
 	    }
+	    
+	    public int StartMatch() {
+		    foreach (var pl in PlayerList.ToArray()) {
+			    PlayerList.Remove(pl);
+			    pl.State = 0;
+			    PlayerList.Add(pl);
+		    }
+		    return 0;
+	    }
+	    
+	    public int StopMatch() {
+		    foreach (var pl in PlayerList.ToArray()) {
+			    PlayerList.Remove(pl);
+			    pl.State = -1;
+			    PlayerList.Add(pl);
+		    }
+		    return 0;
+	    }
 
         public override string ToString() => "[MatchID: " + this.ID + "]";
 
