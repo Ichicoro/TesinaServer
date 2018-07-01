@@ -132,11 +132,10 @@ namespace TesinaServer.Helpers {
 
 	    public static bool ResetTimeout(int mid) {
 		    foreach (var tim in Timers) {
-			    if (tim.MatchID == mid) {
-				    Console.WriteLine($"Resetting Timeout for Match with ID {mid}");
-				    tim.Timer.Change(DeletionTimeout, Timeout.Infinite);
-				    return true;
-			    }
+			    if (tim.MatchID != mid) continue;
+			    Console.WriteLine($"Resetting Timeout for Match with ID {mid}");
+			    tim.Timer.Change(DeletionTimeout, Timeout.Infinite);
+			    return true;
 		    }
 
 		    return false;
@@ -144,11 +143,10 @@ namespace TesinaServer.Helpers {
 	    
 	    public static bool DeleteTimeout(int mid) {
 		    foreach (var tim in Timers) {
-			    if (tim.MatchID == mid) {
-				    Console.WriteLine($"Deleting Timeout for Match with ID {mid}");
-				    Timers.Remove(tim);
-				    return true;
-			    }
+			    if (tim.MatchID != mid) continue;
+			    Console.WriteLine($"Deleting Timeout for Match with ID {mid}");
+			    Timers.Remove(tim);
+			    return true;
 		    }
 
 		    return false;
