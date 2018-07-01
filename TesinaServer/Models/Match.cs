@@ -41,6 +41,8 @@ namespace TesinaServer.Models {
 		    foreach (var pl in PlayerList.ToArray()) {
 			    if (pl.ID != p.ID) continue;
 			    PlayerList.Remove(pl);
+			    if (p.State == -2)
+					p.State = pl.State;
 			    PlayerList.Add(p);
 		    }
 		    return 0;
